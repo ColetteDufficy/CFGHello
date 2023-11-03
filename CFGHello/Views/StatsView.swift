@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StatsView: View {
     
-    var userProfile: UserProfile = UserProfile(username: "CFG", gamesAttempted: 0)
+    @State var userProfile: UserProfile = UserProfile(username: "CFG", gamesAttempted: 0)
     
     var body: some View {
         VStack {
@@ -17,9 +17,26 @@ struct StatsView: View {
             Text("\(userProfile.username)'s Stats")
                 .font(.title)
             
-            VStack {
-                Text("Text:\t\(userProfile.username)")
-                Text("Games:\t\(userProfile.gamesAttempted)")
+            Form {
+                HStack{
+                    Text("Username:")
+                    TextField("username", text: $userProfile.username)
+                        .onSubmit {
+                            UserDefaults.standard.set(userProfile.username, forKey: "username")
+                            UserDefaults.standard.set(userProfile.gamesAttempted, forKey: "gamesAttempted")
+                        }
+                }
+                HStack{
+                    Text("Games Attempted:")
+                    Text("\(userProfile.gamesAttempted)")
+                }
+            }
+        }.onAppear{
+            if(UserDefaults.standard.object(forKey: "username") != nil){
+                userProfile.username = UserDefaults.standard.string(forKey: "username")!
+            }
+            if(UserDefaults.standard.object(forKey: "gamesAttempted") != nil) {
+                userProfile.gamesAttempted = UserDefaults.standard.integer(forKey: "gamesAttempted")
             }
         }
     }
