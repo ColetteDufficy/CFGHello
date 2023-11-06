@@ -17,12 +17,20 @@ struct BoardView: View {
                     ForEach(0..<Utils.maxCells){ cell in
                         
                         if (cell.isMultiple(of: 2)) {
-                            Image(systemName: "square.fill")
-                                .foregroundColor(Utils.colourDarkCell)
+                            Button(action: {
+                                print("dark button tapped")
+                            }){
+                                Image(systemName: "square.fill")
+                                    .foregroundColor(Utils.colourDarkCell)
+                            }
                         }
                         else {
-                            Image(systemName: "square.fill")
-                                .foregroundColor(Utils.colourLightCell)
+                            Button(action: {
+                                print("light button tapped")
+                            }){
+                                Image(systemName: "square.fill")
+                                    .foregroundColor(Utils.colourLightCell)
+                            }
                         }
                     }
                 }
